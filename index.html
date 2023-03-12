@@ -41,7 +41,7 @@ Người chơi O:
                 let positionX = prompt("X: ");
                 let positionY = prompt("Y: ");
                 data = "";
-                if (check(board,positionX,positionY)) {
+                if (checkValue(board,positionX,positionY)) {
                     alert("Đã có giá trị tại ô đã nhập! Mời nhập lại");
                 }else {
                     board[positionX][positionY] = "x";
@@ -51,8 +51,11 @@ Người chơi O:
                             data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
                         }
                     }
-                    data += "<br/><br/>"
-                    b.innerHTML = data
+                    data += "<br/><br/>";
+                    b.innerHTML = data;
+                    if (checkXWin(board,positionX,'x')){
+                        document.write("X Win");
+                    }
                     flag = false;
                     xTurn = false;
                     oTurn = true;
@@ -70,7 +73,7 @@ Người chơi O:
                 let positionX = prompt("X: ");
                 let positionY = prompt("Y: ");
                 data = "";
-                if (check(board,positionX,positionY)) {
+                if (checkValue(board,positionX,positionY)) {
                     alert("Đã có giá trị tại ô đã nhập! Mời nhập lại");
                 }else {
                     board[positionX][positionY] = "o";
@@ -80,8 +83,11 @@ Người chơi O:
                             data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
                         }
                     }
-                    data += "<br/><br/>"
-                    b.innerHTML = data
+                    data += "<br/><br/>";
+                    b.innerHTML = data;
+                    if (checkOWin(board,positionX,'o')){
+                        document.write("O Win");
+                    }
                     flag = false;
                     oTurn = false;
                     xTurn = true;
@@ -89,9 +95,41 @@ Người chơi O:
             } while (flag);
         }
     }
-    function check(board, posX, posY) {
+    function checkValue(board, posX, posY) {
         if(board[posX][posY] !== '-'){
             return true;
+        }
+        return false;
+    }
+    function checkXWin(board, posX, x) {
+        if(board[posX][0] === x || board[posX][4] === x) {
+            if ((board[posX][0] && board[posX][1] && board[posX][2]) === x) {
+                return true;
+            }
+            else if ((board[posX][4] && board[posX][3] && board[posX][2]) === x){
+                return true;
+            }
+        }
+        else {
+            if ((board[posX][1] && board[posX][2] && board[posX][3]) === x){
+                return true;
+            }
+        }
+        return false;
+    }
+    function checkOWin(board, posX, o) {
+        if(board[posX][0] === o || board[posX][4] === o) {
+            if ((board[posX][0] && board[posX][1] && board[posX][2]) === o) {
+                return true;
+            }
+            else if ((board[posX][4] && board[posX][3] && board[posX][2]) === o){
+                return true;
+            }
+        }
+        else {
+            if ((board[posX][1] && board[posX][2] && board[posX][3]) === o){
+                return true;
+            }
         }
         return false;
     }

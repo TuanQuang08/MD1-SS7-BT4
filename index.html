@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Caro Game Simple</h3>
+<p id="carogame"></p>
+X đi trước
+<br><br>
+Người chơi X:
+<input type="button" value="Change X" onclick="changeValueX();"><br><br>
+Người chơi O:
+<input type="button" value="Change O" onclick="changeValueO();">
+</body>
+<script>
+    let b = document.getElementById("carogame");
+    let board = [];
+    let data = "";
+    let xTurn = true;
+    let oTurn = false;
+    for (let i = 0; i < 5; i++) {
+        board[i] = ["-", "-", "-", "-", "-"];
+    }
+    for (let i = 0; i < 5; i++) {
+        data += "<br/>";
+        for (let j = 0; j < 5; j++) {
+            data += board[i][j] + "&nbsp;&nbsp;";
+        }
+    }
+    b.innerHTML = data
+    b.style.fontSize = '30px';
+
+    function changeValueX() {
+        let flag = true;
+        if(!xTurn){
+            alert("Lượt của O!!!");
+        }else {
+            do {
+                let positionX = prompt("X: ");
+                let positionY = prompt("Y: ");
+                data = "";
+                if (check(board,positionX,positionY)) {
+                    alert("Đã có giá trị tại ô đã nhập! Mời nhập lại");
+                }else {
+                    board[positionX][positionY] = "x";
+                    for (let i = 0; i < 5; i++) {
+                        data += "<br/>";
+                        for (let j = 0; j < 5; j++) {
+                            data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+                        }
+                    }
+                    data += "<br/><br/>"
+                    b.innerHTML = data
+                    flag = false;
+                    xTurn = false;
+                    oTurn = true;
+                }
+            } while (flag);
+        }
+    }
+
+    function changeValueO() {
+        let flag = true;
+        if(!oTurn){
+            alert("Lượt của X!!!");
+        }else {
+            do {
+                let positionX = prompt("X: ");
+                let positionY = prompt("Y: ");
+                data = "";
+                if (check(board,positionX,positionY)) {
+                    alert("Đã có giá trị tại ô đã nhập! Mời nhập lại");
+                }else {
+                    board[positionX][positionY] = "o";
+                    for (let i = 0; i < 5; i++) {
+                        data += "<br/>";
+                        for (let j = 0; j < 5; j++) {
+                            data += board[i][j] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+                        }
+                    }
+                    data += "<br/><br/>"
+                    b.innerHTML = data
+                    flag = false;
+                    oTurn = false;
+                    xTurn = true;
+                }
+            } while (flag);
+        }
+    }
+    function check(board, posX, posY) {
+        if(board[posX][posY] !== '-'){
+            return true;
+        }
+        return false;
+    }
+</script>
+</html>
